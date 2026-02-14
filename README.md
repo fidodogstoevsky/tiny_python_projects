@@ -1,3 +1,8 @@
+# Forked
+
+This is a fork of the code used in Ken Youens-Clark's book, which I'm working through
+
+
 # Introduction
 
 This is the code repository for the Manning Publications book, _Tiny Python Projects_, by Ken Youens-Clark:
