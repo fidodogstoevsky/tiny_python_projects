@@ -66,3 +66,21 @@ def test_more_than_two_sorted():
     out = getoutput(f'{prg} {arg} --sorted')
     expected = ('You are bringing apples, bananas, cherries, and dates.')
     assert out.strip() == expected
+
+# --------------------------------------------------
+def test_no_oxford():
+    """ check if including flag -o removes the oxford comma """
+    
+    arg = 'bananas apples dates cherries'
+    out = getoutput(f'{prg} {arg} --oxford')
+    expected = ('You are bringing bananas, apples, dates and cherries.')
+    assert out.strip() == expected
+
+# --------------------------------------------------
+def test_custom_punctuation():
+    """ check if user can select custom punctuation for separating list items """
+
+    arg = 'bananas apples dates cherries'
+    out = getoutput(f'{prg} {arg} --punc ";"')
+    expected = (('You are bringing bananas; apples; dates; and cherries.'))
+    assert out.strip() == expected
