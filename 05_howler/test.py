@@ -90,3 +90,57 @@ def test_file():
         finally:
             if os.path.isfile(out_file):
                 os.remove(out_file)
+
+# ---------
+# New tests
+# ---------
+
+# --------------------------------------------------
+def test_text_stdout_lowercase():
+    """Test STDIN/STDOUT for lowercase"""
+
+    for flag in ['-e', '--ee']:
+        out = getoutput(f'{prg} {flag} "FOO BAR BAZ"')
+        assert out.strip() == 'foo bar baz'
+
+# --------------------------------------------------
+def test_text_outfile_lowercase():
+    """Test STDIN/outfile for lowercase"""
+
+    for flag in ['-e', '--ee']:
+        out_file = random_string()
+        if os.path.isfile(out_file):
+            os.remove(out_file)
+
+        try:
+            out = getoutput(f'{prg} {out_flag()} {out_file} {flag} "FOO BAR BAZ"')
+            assert out.strip() == ''
+            assert os.path.isfile(out_file)
+            text = open(out_file).read().rstrip()
+            assert text == 'foo bar baz'
+        finally:
+            if os.path.isfile(out_file):
+                os.remove(out_file)
+
+# --------------------------------------------------
+def test_file():
+    """Test file in/out"""
+
+    for flag in ['-e', '--ee']:
+        for expected_file in os.listdir('test-outs'):
+            try:
+                out_file = random_string()
+                if os.path.isfile(out_file):
+                    os.remove(out_file)
+
+                basename = os.path.basename(expected_file)
+                in_file = os.path.join('../inputs', basename)
+                out = getoutput(f'{prg} {out_flag()} {out_file} {in_file} {flag}')
+                assert out.strip() == ''
+                produced = open(out_file).read().rstrip()
+                expected = open(os.path.join('test-outs',
+                                            expected_file)).read().strip().lower()
+                assert expected == produced
+            finally:
+                if os.path.isfile(out_file):
+                    os.remove(out_file)
