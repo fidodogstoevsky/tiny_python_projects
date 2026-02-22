@@ -35,6 +35,9 @@ def get_args():
         # if args.text is a file, replace it
         # with an open file handle for it
         args.text = open(args.text)
+    elif os.path.isdir(args.text):
+        # if args.text is a directory
+        pass
     else:
         # otherwise, replace it with an io.StringIO()
         # this value acts like an open file handle
