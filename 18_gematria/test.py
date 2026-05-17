@@ -27,7 +27,6 @@ def test_usage():
         assert rv == 0
         assert re.match("usage", out, re.IGNORECASE)
 
-
 # --------------------------------------------------
 def test_text():
     """Text"""
